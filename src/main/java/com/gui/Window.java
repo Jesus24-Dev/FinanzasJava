@@ -6,13 +6,16 @@ package com.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 /**
  *
  * @author PC
  */
 public class Window extends javax.swing.JFrame {
-
+    String paginaActual = "principal";
     int xMouse, yMouse;
     
     public Window() {
@@ -25,8 +28,21 @@ public class Window extends javax.swing.JFrame {
         content.add(p, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
+        
+        actualizarFecha();
     }
 
+    private void actualizarFecha(){
+        LocalDate fechaHoy = LocalDate.now();
+
+        DateTimeFormatter formateador = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+
+        String fechaFormateada = fechaHoy.format(formateador);
+
+        fechaActual.setText("Hoy es " + fechaFormateada);
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,7 +71,10 @@ public class Window extends javax.swing.JFrame {
         barra = new javax.swing.JPanel();
         btnCerrar = new javax.swing.JPanel();
         txtCerrar = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         panelSaludo = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        fechaActual = new javax.swing.JLabel();
         content = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -83,6 +102,9 @@ public class Window extends javax.swing.JFrame {
         principalPanel.setBackground(new java.awt.Color(0, 102, 204));
         principalPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         principalPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                principalPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 principalPanelMouseEntered(evt);
             }
@@ -124,6 +146,9 @@ public class Window extends javax.swing.JFrame {
         movimientosPanel.setBackground(new java.awt.Color(0, 102, 204));
         movimientosPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         movimientosPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                movimientosPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 movimientosPanelMouseEntered(evt);
             }
@@ -165,6 +190,9 @@ public class Window extends javax.swing.JFrame {
         ingresosPanel.setBackground(new java.awt.Color(0, 102, 204));
         ingresosPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ingresosPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ingresosPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 ingresosPanelMouseEntered(evt);
             }
@@ -206,6 +234,9 @@ public class Window extends javax.swing.JFrame {
         gastosPanel.setBackground(new java.awt.Color(0, 102, 204));
         gastosPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gastosPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                gastosPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 gastosPanelMouseEntered(evt);
             }
@@ -284,6 +315,7 @@ public class Window extends javax.swing.JFrame {
                 barraMousePressed(evt);
             }
         });
+        barra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCerrar.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -317,34 +349,27 @@ public class Window extends javax.swing.JFrame {
                 .addGap(50, 50, 50))
         );
 
-        javax.swing.GroupLayout barraLayout = new javax.swing.GroupLayout(barra);
-        barra.setLayout(barraLayout);
-        barraLayout.setHorizontalGroup(
-            barraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, barraLayout.createSequentialGroup()
-                .addGap(974, 974, 974)
-                .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        barraLayout.setVerticalGroup(
-            barraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnCerrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        barra.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(974, 0, -1, 40));
+
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel2.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Bienvenido.");
+        barra.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 240, 37));
 
         getContentPane().add(barra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 40));
 
         panelSaludo.setBackground(new java.awt.Color(0, 153, 255));
+        panelSaludo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout panelSaludoLayout = new javax.swing.GroupLayout(panelSaludo);
-        panelSaludo.setLayout(panelSaludoLayout);
-        panelSaludoLayout.setHorizontalGroup(
-            panelSaludoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 730, Short.MAX_VALUE)
-        );
-        panelSaludoLayout.setVerticalGroup(
-            panelSaludoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 190, Short.MAX_VALUE)
-        );
+        jLabel3.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Aplicación de finanzas");
+        panelSaludo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 330, 60));
+
+        fechaActual.setFont(new java.awt.Font("Lucida Sans", 0, 24)); // NOI18N
+        fechaActual.setForeground(new java.awt.Color(255, 255, 255));
+        panelSaludo.add(fechaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 650, 80));
 
         getContentPane().add(panelSaludo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 730, 190));
 
@@ -423,11 +448,72 @@ public class Window extends javax.swing.JFrame {
         gastosPanel.setBackground(new Color(0, 102, 204));
     }//GEN-LAST:event_gastosPanelMouseExited
 
+    private void principalPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_principalPanelMouseClicked
+        if (!paginaActual.equals("principal")){
+            Principal p = new Principal();
+            p.setSize(730, 540);
+            p.setLocation(0,0);
+        
+            content.removeAll();
+            content.add(p, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+            
+            paginaActual = "principal";
+        }
+    }//GEN-LAST:event_principalPanelMouseClicked
+
+    private void movimientosPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_movimientosPanelMouseClicked
+        if (!paginaActual.equals("movimientos")){
+            Movimientos m = new Movimientos();
+            m.setSize(730, 540);
+            m.setLocation(0,0);
+        
+            content.removeAll();
+            content.add(m, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+            
+            paginaActual = "movimientos";
+        }
+    }//GEN-LAST:event_movimientosPanelMouseClicked
+
+    private void ingresosPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingresosPanelMouseClicked
+        if (!paginaActual.equals("ingresos")){
+            Ingresos i = new Ingresos();
+            i.setSize(730, 540);
+            i.setLocation(0,0);
+        
+            content.removeAll();
+            content.add(i, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+            
+            paginaActual = "ingresos";
+        }
+    }//GEN-LAST:event_ingresosPanelMouseClicked
+
+    private void gastosPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gastosPanelMouseClicked
+        if (!paginaActual.equals("gastos")){
+            Gastos g = new Gastos();
+            g.setSize(730, 540);
+            g.setLocation(0,0);
+        
+            content.removeAll();
+            content.add(g, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+            
+            paginaActual = "gastos";
+        }
+    }//GEN-LAST:event_gastosPanelMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel barra;
     private javax.swing.JPanel btnCerrar;
     private javax.swing.JPanel content;
+    private javax.swing.JLabel fechaActual;
     private javax.swing.JPanel gastosPanel;
     private javax.swing.JLabel imgGastos;
     private javax.swing.JLabel imgIngresos;
@@ -436,6 +522,8 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel imgPrincipal;
     private javax.swing.JPanel ingresosPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel menuOpciones;
