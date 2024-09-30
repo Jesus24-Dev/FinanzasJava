@@ -462,7 +462,7 @@ public class Window extends javax.swing.JFrame {
             paginaActual = "principal";
         }
     }//GEN-LAST:event_principalPanelMouseClicked
-
+    
     private void movimientosPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_movimientosPanelMouseClicked
         if (!paginaActual.equals("movimientos")){
             Movimientos m = new Movimientos();
@@ -518,7 +518,6 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel imgGastos;
     private javax.swing.JLabel imgIngresos;
     private javax.swing.JLabel imgMovimientos;
-    private javax.swing.JLabel imgMovimientos2;
     private javax.swing.JLabel imgPrincipal;
     private javax.swing.JPanel ingresosPanel;
     private javax.swing.JLabel jLabel1;
@@ -528,14 +527,12 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JPanel menu;
     private javax.swing.JPanel menuOpciones;
     private javax.swing.JPanel movimientosPanel;
-    private javax.swing.JPanel movimientosPanel2;
     private javax.swing.JPanel panelSaludo;
     private javax.swing.JPanel principalPanel;
     private javax.swing.JLabel txtCerrar;
     private javax.swing.JLabel txtGastos;
     private javax.swing.JLabel txtIngresos;
     private javax.swing.JLabel txtMovimientos;
-    private javax.swing.JLabel txtMovimientos2;
     private javax.swing.JLabel txtPrincipal;
     // End of variables declaration//GEN-END:variables
 }
