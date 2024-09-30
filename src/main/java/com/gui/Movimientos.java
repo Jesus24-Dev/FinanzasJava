@@ -4,6 +4,7 @@
  */
 package com.gui;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
@@ -73,14 +74,14 @@ public class Movimientos extends javax.swing.JPanel {
         tablaMovimientos.setForeground(new java.awt.Color(0, 0, 0));
         tablaMovimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"INGRESO", "3000", "VENTA DE CARRO", "12-04-2019"}
+                {"INGRESO", null, null, null}
             },
             new String [] {
                 "Tipo", "Monto", "Descripción", "Fecha"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -197,6 +198,14 @@ public class Movimientos extends javax.swing.JPanel {
 
         btnAgregar.setBackground(new java.awt.Color(102, 204, 255));
         btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseExited(evt);
+            }
+        });
         btnAgregar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel13.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -207,6 +216,14 @@ public class Movimientos extends javax.swing.JPanel {
 
         add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 440, 140, 50));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAgregarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseEntered
+        btnAgregar.setBackground(new Color(0, 204, 255));
+    }//GEN-LAST:event_btnAgregarMouseEntered
+
+    private void btnAgregarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseExited
+        btnAgregar.setBackground(new Color(102, 204, 255));
+    }//GEN-LAST:event_btnAgregarMouseExited
 
     private void llenaDias(JComboBox box){
         for (int i = 1; i <= 31; i++){
