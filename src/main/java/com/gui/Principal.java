@@ -49,7 +49,7 @@ public class Principal extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Tipo", "Monto", "Descripcion", "Fecha"
+                "Tipo", "Monto", "Descripción", "Fecha"
             }
         ) {
             Class[] types = new Class [] {
