@@ -4,6 +4,8 @@
  */
 package com.gui;
 
+import finanzasapp.modelos.Cuenta;
+
 /**
  *
  * @author PC
@@ -15,6 +17,7 @@ public class Principal extends javax.swing.JPanel {
      */
     public Principal() {
         initComponents();
+        actualizarSaldo();
     }
 
     /**
@@ -104,11 +107,17 @@ public class Principal extends javax.swing.JPanel {
 
         saldoActual.setFont(new java.awt.Font("Lucida Sans", 0, 48)); // NOI18N
         saldoActual.setForeground(new java.awt.Color(0, 0, 0));
-        saldoActual.setText("0.00 $");
         add(saldoActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 
+    public void actualizarSaldo(){
+        double saldo = Cuenta.obtenerSaldo();
+        String saldoTxt = saldo+"$";
+        
+        saldoActual.setText(saldoTxt);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

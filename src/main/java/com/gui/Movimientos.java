@@ -4,6 +4,8 @@
  */
 package com.gui;
 
+import finanzasapp.modelos.Gasto;
+import finanzasapp.modelos.Ingreso;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.Date;
@@ -235,6 +237,7 @@ public class Movimientos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAgregarMouseExited
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+        errorTxt.setText("");
         try{
         String tipoDeMvm = (String) tipoMovimiento.getSelectedItem();
         String montoText = montoMovimiento.getText();
@@ -247,17 +250,22 @@ public class Movimientos extends javax.swing.JPanel {
                 throw new ErrorPersonalizado("Los campos no pueden estar vacios");
             }
        
-        double montoMvm = Double.parseDouble(montoText);    
+        double montoMvm = Double.parseDouble(montoText); 
         if(tipoDeMvm.equals("INGRESO")){
-            System.out.println("GUARDAR EN TABLA INGRESO");
+            Ingreso.guardarIngreso(dia, mes, anio, descMvm, montoMvm);
+            errorTxt.setForeground(Color.GREEN);
+            errorTxt.setText("Nuevo ingreso registrado");
         } else {
-            System.out.println("GUARDAR EN TABLA GASTO");
+            Gasto.guardarGasto(dia, mes, anio, descMvm, montoMvm);
+            errorTxt.setForeground(Color.GREEN);
+            errorTxt.setText("Nuevo gasto registrado");
         }
-        errorTxt.setText("");
         
         } catch(NumberFormatException e){
+            errorTxt.setForeground(Color.RED);
             errorTxt.setText("El monto debe ser un número");
         } catch (ErrorPersonalizado e) {
+            errorTxt.setForeground(Color.RED);
             errorTxt.setText("Los campos son requeridos");
         }
         
