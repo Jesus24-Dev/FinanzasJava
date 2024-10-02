@@ -5,6 +5,7 @@
 package com.gui;
 
 import finanzasapp.modelos.Cuenta;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,6 +19,7 @@ public class Principal extends javax.swing.JPanel {
     public Principal() {
         initComponents();
         actualizarSaldo();
+        colocarDatos();
     }
 
     /**
@@ -48,8 +50,7 @@ public class Principal extends javax.swing.JPanel {
         tabla10mov.setForeground(new java.awt.Color(0, 0, 0));
         tabla10mov.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"ddsdd",  new Double(12.0), "dsds", null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Tipo", "Monto", "Descripción", "Fecha"
@@ -109,7 +110,20 @@ public class Principal extends javax.swing.JPanel {
         saldoActual.setForeground(new java.awt.Color(0, 0, 0));
         add(saldoActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
+    public void colocarDatos(){
+       DefaultTableModel modelo = (DefaultTableModel) tabla10mov.getModel();
 
+    Object[][] movimientos = Cuenta.mostrarUltimosMovimientos();
+    
+        for(Object[] mov:movimientos){
+            String tipo = (String) mov[0];      
+            Double monto = (Double) mov[1];     
+            String descripcion = (String) mov[2]; 
+            String fecha = (String) mov[3];      
+            Object[] nuevaFila = {tipo, monto, descripcion, fecha};
+            modelo.addRow(nuevaFila);
+        }
+    }
 
     public void actualizarSaldo(){
         double saldo = Cuenta.obtenerSaldo();
