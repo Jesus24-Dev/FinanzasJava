@@ -1,6 +1,12 @@
 
 package finanzasapp.modelos;
 
+import finanzasapp.modelos.conexion.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Cuenta {
     protected final int id_cuenta;
     protected double saldo_actual;
@@ -10,16 +16,22 @@ public class Cuenta {
         this.saldo_actual = saldo_actual;
     }
 
-    public int getId_cuenta() {
-        return id_cuenta;
+   public static double obtenerSaldo() {
+    String sql = "SELECT saldo_actual FROM cuenta WHERE id_cuenta = 1";
+    double saldo = 0;
+    try (Connection conn = Conexion.connect();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+        if (rs.next()) {
+            saldo = rs.getDouble("saldo_actual");
+        } 
+    } catch (SQLException e) {
+        e.printStackTrace(); // Muestra la excepción si ocurre un error
     }
+    return saldo;
+}
 
-    public double getSaldo_actual() {
-        return saldo_actual;
-    }
-    
-    public void setSaldo_actual(double saldo_actual) {
-        this.saldo_actual = saldo_actual;
-    }
    
+   
+    
 }
