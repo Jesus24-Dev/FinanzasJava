@@ -16,9 +16,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Ingresos extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Ingresos
-     */
+    Ingreso ingreso;
+    
     public Ingresos() {
         initComponents();
         llenaMeses(mesComboBox);
@@ -46,6 +45,7 @@ public class Ingresos extends javax.swing.JPanel {
         btnEditarIngreso = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        errorTxt = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -71,6 +71,11 @@ public class Ingresos extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tablaIngresos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaIngresosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tablaIngresos);
@@ -119,6 +124,9 @@ public class Ingresos extends javax.swing.JPanel {
         btnEliminarIngreso.setBackground(new java.awt.Color(102, 204, 255));
         btnEliminarIngreso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarIngreso.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarIngresoMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEliminarIngresoMouseEntered(evt);
             }
@@ -158,6 +166,11 @@ public class Ingresos extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Registro de ingresos");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
+
+        errorTxt.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        errorTxt.setToolTipText("");
+        errorTxt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(errorTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 420, 260, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarIngresoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarIngresoMouseEntered
@@ -183,6 +196,31 @@ public class Ingresos extends javax.swing.JPanel {
     private void mesComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mesComboBoxActionPerformed
         colocarDatos();
     }//GEN-LAST:event_mesComboBoxActionPerformed
+
+    private void tablaIngresosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaIngresosMouseClicked
+        int row = tablaIngresos.getSelectedRow();
+        double monto = (double) tablaIngresos.getValueAt(row, 0);
+        String descripcion = (String) tablaIngresos.getValueAt(row, 1);
+        String fecha = (String) tablaIngresos.getValueAt(row, 2);
+        String[] partesFecha = fecha.split("-");
+        String dia = partesFecha[0];
+        String mes = partesFecha[1];
+        String anio = partesFecha[2];
+        
+        ingreso = new Ingreso(1, dia, mes, anio, descripcion, monto);
+    }//GEN-LAST:event_tablaIngresosMouseClicked
+
+    private void btnEliminarIngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarIngresoMouseClicked
+        if(ingreso != null){
+            ingreso.eliminarIngreso();
+            errorTxt.setText("Ingreso eliminado");
+            errorTxt.setForeground(Color.green);
+            colocarDatos();
+        } else {
+            errorTxt.setText("Escoja una celda para eliminar.");
+            errorTxt.setForeground(Color.red);
+        }
+    }//GEN-LAST:event_btnEliminarIngresoMouseClicked
 
     private void llenaMeses(JComboBox box){
         Date fechaActual = new Date();
@@ -236,6 +274,7 @@ public class Ingresos extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnEditarIngreso;
     private javax.swing.JPanel btnEliminarIngreso;
+    private javax.swing.JLabel errorTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
