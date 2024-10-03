@@ -4,9 +4,11 @@
  */
 package com.gui;
 
+import finanzasapp.modelos.Ingreso;
 import java.awt.Color;
 import java.util.Date;
 import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -83,6 +85,11 @@ public class Ingresos extends javax.swing.JPanel {
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 340, 420));
 
+        yearComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearComboBoxActionPerformed(evt);
+            }
+        });
         add(yearComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, -1, -1));
 
         jLabel11.setBackground(new java.awt.Color(0, 0, 0));
@@ -102,6 +109,11 @@ public class Ingresos extends javax.swing.JPanel {
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 70, -1, -1));
 
         mesComboBox.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
+        mesComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mesComboBoxActionPerformed(evt);
+            }
+        });
         add(mesComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, -1, -1));
 
         btnEliminarIngreso.setBackground(new java.awt.Color(102, 204, 255));
@@ -164,12 +176,22 @@ public class Ingresos extends javax.swing.JPanel {
         btnEditarIngreso.setBackground(new Color(102, 204, 255));
     }//GEN-LAST:event_btnEditarIngresoMouseExited
 
+    private void yearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBoxActionPerformed
+        colocarDatos();
+    }//GEN-LAST:event_yearComboBoxActionPerformed
+
+    private void mesComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mesComboBoxActionPerformed
+        colocarDatos();
+    }//GEN-LAST:event_mesComboBoxActionPerformed
+
     private void llenaMeses(JComboBox box){
+        Date fechaActual = new Date();
         String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
             "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
         for (String mese : meses) {
             box.addItem(mese);
         }
+        box.setSelectedIndex(fechaActual.getMonth());
     }
     
     private void llenarAnios(JComboBox box){
@@ -181,6 +203,34 @@ public class Ingresos extends javax.swing.JPanel {
             years[i] = currentYear - i;
             box.addItem(Integer.toString(years[i]));
         }
+    }
+    
+    public void colocarDatos(){
+        
+       DefaultTableModel modelo = (DefaultTableModel) tablaIngresos.getModel();
+        modelo.setRowCount(0);
+        Object[][] movimientos = Ingreso.verIngresos(obtenerMes(), obtenerAnio());
+    
+        for(Object[] mov:movimientos){  
+            Double monto = (Double) mov[0];     
+            String descripcion = (String) mov[1]; 
+            String fecha = (String) mov[2];      
+            Object[] nuevaFila = {monto, descripcion, fecha};
+            modelo.addRow(nuevaFila);
+        }
+        tablaIngresos.revalidate();
+        tablaIngresos.repaint();
+    }
+    
+    public String obtenerMes(){
+        String mes = (String) mesComboBox.getSelectedItem();
+        
+        return mes;
+    }
+    public String obtenerAnio(){
+        String anio = (String) yearComboBox.getSelectedItem();
+        
+        return anio;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -31,8 +31,7 @@ public class Movimientos extends javax.swing.JPanel {
         llenaDias(escogeDia);
         llenaMeses(mesComboBox);
         llenaMeses(escogeMes);
-        
-        
+         
     }
 
     /**
