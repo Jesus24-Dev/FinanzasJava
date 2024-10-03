@@ -3,6 +3,8 @@ package finanzasapp.modelos;
 
 import finanzasapp.modelos.conexion.Conexion;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ingreso {
 
@@ -35,24 +37,47 @@ public class Ingreso {
             System.out.println(e.getMessage());
         }
     }
-  
-    public static void verIngresos(){
-        String sql = "SELECT fecha, descripcion, monto FROM ingreso WHERE id_cuenta = ?";
+    
+    public static Object[][] verIngresos(String mm, String yyyy) {
+       List<Object> ingresos = new ArrayList<>();
+        String sql = "SELECT dia, mes, anio, monto, descripcion, " +
+               "CASE mes " +
+               "WHEN 'Enero' THEN 1 " +
+               "WHEN 'Febrero' THEN 2 " +
+               "WHEN 'Marzo' THEN 3 " +
+               "WHEN 'Abril' THEN 4 " +
+               "WHEN 'Mayo' THEN 5 " +
+               "WHEN 'Junio' THEN 6 " +
+               "WHEN 'Julio' THEN 7 " +
+               "WHEN 'Agosto' THEN 8 " +
+               "WHEN 'Septiembre' THEN 9 " +
+               "WHEN 'Octubre' THEN 10 " +
+               "WHEN 'Noviembre' THEN 11 " +
+               "WHEN 'Diciembre' THEN 12 " +
+               "END AS mes_numero " +
+               "FROM ingreso " +
+               "WHERE mes = ? AND anio = ? " +
+               "ORDER BY anio DESC, mes_numero DESC, dia DESC;";
+
         try (Connection conn = Conexion.connect();
-            Statement stmt = conn.createStatement();
-            PreparedStatement psmt = conn.prepareStatement(sql) ){     
-            psmt.setInt(1, 1);
-            ResultSet rs = psmt.executeQuery();
-            while(rs.next()){
-                
-                String fecha = rs.getString("fecha");
-                String descripcion = rs.getString("descripcion");
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, mm);
+            stmt.setString(2, yyyy);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int dia = rs.getInt("dia");
+                String mes = rs.getString("mes");
+                int anio = rs.getInt("anio");
                 double monto = rs.getDouble("monto");
-                
-                System.out.println("Fecha: " + fecha + "\nDescripcion: " + descripcion + "\nMonto: " + monto);
+                String descripcion = rs.getString("descripcion");
+                String fecha = dia + "-" + mes + "-" + anio; 
+                ingresos.add(new Object[]{monto, descripcion, fecha});
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
+        Object[][] movimientosArray = new Object[ingresos.size()][];
+        movimientosArray = ingresos.toArray(movimientosArray); 
+        return movimientosArray;
     }
 }
