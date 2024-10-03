@@ -4,6 +4,7 @@
  */
 package com.gui;
 
+import finanzasapp.Form;
 import finanzasapp.modelos.Ingreso;
 import java.awt.Color;
 import java.util.Date;
@@ -146,6 +147,9 @@ public class Ingresos extends javax.swing.JPanel {
         btnEditarIngreso.setBackground(new java.awt.Color(102, 204, 255));
         btnEditarIngreso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditarIngreso.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditarIngresoMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEditarIngresoMouseEntered(evt);
             }
@@ -221,6 +225,18 @@ public class Ingresos extends javax.swing.JPanel {
             errorTxt.setForeground(Color.red);
         }
     }//GEN-LAST:event_btnEliminarIngresoMouseClicked
+
+    private void btnEditarIngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarIngresoMouseClicked
+           if(ingreso != null){
+            Form.mostrarFormulario("Editar ingreso", "INGRESO", ingreso.monto, ingreso.descripcion, ingreso.dia, ingreso.mes, ingreso.anio);
+            errorTxt.setText("Ingreso editado");
+            errorTxt.setForeground(Color.green);
+            colocarDatos();
+        } else {
+            errorTxt.setText("Escoja una celda para editar.");
+            errorTxt.setForeground(Color.red);
+        }
+    }//GEN-LAST:event_btnEditarIngresoMouseClicked
 
     private void llenaMeses(JComboBox box){
         Date fechaActual = new Date();

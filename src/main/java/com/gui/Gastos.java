@@ -4,6 +4,7 @@
  */
 package com.gui;
 
+import finanzasapp.Form;
 import finanzasapp.modelos.Gasto;
 import java.awt.Color;
 import java.util.Date;
@@ -145,6 +146,9 @@ public class Gastos extends javax.swing.JPanel {
         btnEditarGasto.setBackground(new java.awt.Color(102, 204, 255));
         btnEditarGasto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditarGasto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditarGastoMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEditarGastoMouseEntered(evt);
             }
@@ -220,6 +224,18 @@ public class Gastos extends javax.swing.JPanel {
             errorTxt.setForeground(Color.red);
         }
     }//GEN-LAST:event_btnEliminarGastoMouseClicked
+
+    private void btnEditarGastoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarGastoMouseClicked
+        if(gasto != null){
+            Form.mostrarFormulario("Editar gasto", "GASTO", gasto.monto, gasto.descripcion, gasto.dia, gasto.mes, gasto.anio);
+            errorTxt.setText("Ingreso editado");
+            errorTxt.setForeground(Color.green);
+            colocarDatos();
+        } else {
+            errorTxt.setText("Escoja una celda para editar.");
+            errorTxt.setForeground(Color.red);
+        }
+    }//GEN-LAST:event_btnEditarGastoMouseClicked
 
     public void colocarDatos(){
         
