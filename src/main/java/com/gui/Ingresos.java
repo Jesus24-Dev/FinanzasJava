@@ -89,7 +89,7 @@ public class Ingresos extends javax.swing.JPanel {
             tablaIngresos.getColumnModel().getColumn(2).setPreferredWidth(100);
         }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 340, 420));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 410, 420));
 
         yearComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
