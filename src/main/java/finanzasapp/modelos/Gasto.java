@@ -120,7 +120,7 @@ public class Gasto {
         }
     }
     
-    public static void editarGasto(String dia, String mes, String anio, double montoViejo, double monto,  String descripcion){
+    public static void editarGasto(String dia, String mes, String anio, double monto, String descripcion, String diaViejo, String mesViejo, String anioViejo, double montoViejo, String descripcionVieja){
         String sql = "UPDATE gasto SET dia = ?, mes = ?, anio = ?, monto = ?, descripcion = ? ";
         String sql2 = "UPDATE cuenta SET saldo_actual = saldo_actual + ?";
         String sql3 = "UPDATE cuenta SET saldo_actual = saldo_actual - ?";
@@ -135,10 +135,16 @@ public class Gasto {
              stmt.setString(2, mes);
              stmt.setString(3, anio);
              stmt.setDouble(4, monto);   
-             stmt.setString(5, descripcion); 
-             stmt2.setDouble(1, montoViejo);
-             stmt3.setDouble(1, monto);
+             stmt.setString(5, descripcion);
+             stmt.setString(6, diaViejo);
+             stmt.setString(7, mesViejo);
+             stmt.setString(8, anioViejo);
+             stmt.setDouble(9, montoViejo);   
+             stmt.setString(10, descripcionVieja); 
              
+             
+             stmt2.setDouble(1, montoViejo);
+             stmt3.setDouble(1, monto);   
              stmt.executeUpdate();
              stmt2.executeUpdate();
              stmt3.executeUpdate();

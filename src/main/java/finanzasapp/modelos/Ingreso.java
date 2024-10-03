@@ -117,8 +117,9 @@ public class Ingreso {
         }
     }
     
-    public static void editarIngreso(String dia, String mes, String anio, double montoViejo, double monto,  String descripcion){
-        String sql = "UPDATE ingreso SET dia = ?, mes = ?, anio = ?, monto = ?, descripcion = ? ";
+    public static void editarIngreso(String dia, String mes, String anio, double monto, String descripcion, String diaViejo, String mesViejo, String anioViejo, double montoViejo, String descripcionVieja){
+        String sql = "UPDATE ingreso SET dia = ?, mes = ?, anio = ?, monto = ?, descripcion = ? " +
+                "WHERE dia = ? AND mes = ? AND anio = ? AND monto = ? AND descripcion = ?";
         String sql2 = "UPDATE cuenta SET saldo_actual = saldo_actual - ?";
         String sql3 = "UPDATE cuenta SET saldo_actual = saldo_actual + ?";
         
@@ -132,7 +133,14 @@ public class Ingreso {
              stmt.setString(2, mes);
              stmt.setString(3, anio);
              stmt.setDouble(4, monto);   
-             stmt.setString(5, descripcion); 
+             stmt.setString(5, descripcion);
+             stmt.setString(6, diaViejo);
+             stmt.setString(7, mesViejo);
+             stmt.setString(8, anioViejo);
+             stmt.setDouble(9, montoViejo);   
+             stmt.setString(10, descripcionVieja); 
+             
+             
              stmt2.setDouble(1, montoViejo);
              stmt3.setDouble(1, monto);
              

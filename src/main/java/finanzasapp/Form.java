@@ -123,9 +123,9 @@ public class Form extends JDialog {
             String nuevoAnio = (String) anio.getSelectedItem();
             
             if (tipo.equals("INGRESO")){
-                Ingreso.editarIngreso(nuevoDia, nuevoMes, nuevoAnio, monto, montoNuevo, nuevaDescripcion);
+                Ingreso.editarIngreso(nuevoDia, nuevoMes, nuevoAnio, montoNuevo, nuevaDescripcion, diaMov, mesMov, anioMov, monto, descripcion);
             } else if (tipo.equals("GASTO")){
-                Gasto.editarGasto(nuevoDia, nuevoMes, nuevoAnio, monto, montoNuevo, nuevaDescripcion);
+                Gasto.editarGasto(nuevoDia, nuevoMes, nuevoAnio, montoNuevo, nuevaDescripcion, diaMov, mesMov, anioMov, monto, descripcion);
             }
             dispose(); 
         });
