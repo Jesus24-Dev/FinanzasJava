@@ -151,5 +151,36 @@ public class Cuenta {
         return movimientosArray;
     }
    
-    
+    public static void eliminarCuenta() {
+        String sql1 = "DELETE FROM ingreso";
+        String sql2 = "DELETE FROM gasto";
+        String sql3 = "UPDATE cuenta SET saldo_actual = 0";
+        String sql4 = "VACUUM";
+
+        try (Connection conn = Conexion.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql1);
+             PreparedStatement stmt2 = conn.prepareStatement(sql2);
+             PreparedStatement stmt3 = conn.prepareStatement(sql3)) {
+
+            conn.setAutoCommit(false);
+
+            stmt.executeUpdate();
+            stmt2.executeUpdate();
+            stmt3.executeUpdate();
+
+            conn.commit();  // Finalizamos la transacción
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Ejecutamos VACUUM fuera de la transacción
+        try (Connection conn = Conexion.connect();
+             PreparedStatement stmt4 = conn.prepareStatement(sql4)) {
+            stmt4.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
