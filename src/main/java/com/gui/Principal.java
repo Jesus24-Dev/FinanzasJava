@@ -5,6 +5,8 @@
 package com.gui;
 
 import finanzasapp.modelos.Cuenta;
+import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -36,6 +38,8 @@ public class Principal extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         saldoActual = new javax.swing.JLabel();
+        btnEliminarCuenta = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(730, 540));
@@ -109,11 +113,50 @@ public class Principal extends javax.swing.JPanel {
         saldoActual.setFont(new java.awt.Font("Lucida Sans", 0, 48)); // NOI18N
         saldoActual.setForeground(new java.awt.Color(0, 0, 0));
         add(saldoActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, -1, -1));
+
+        btnEliminarCuenta.setBackground(new java.awt.Color(102, 204, 255));
+        btnEliminarCuenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarCuentaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarCuentaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarCuentaMouseExited(evt);
+            }
+        });
+        btnEliminarCuenta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Reiniciar cuenta");
+        btnEliminarCuenta.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 120, 50));
+
+        add(btnEliminarCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 140, 50));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEliminarCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCuentaMouseClicked
+        int respuesta = JOptionPane.showConfirmDialog(null, "Desea reiniciar la cuenta y eliminar TODOS los registros?", "Confirmar reinicio de cuenta", 1);
+        if (respuesta == 0){
+            Cuenta.eliminarCuenta();
+            colocarDatos();
+            actualizarSaldo();
+        }
+    }//GEN-LAST:event_btnEliminarCuentaMouseClicked
+
+    private void btnEliminarCuentaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCuentaMouseEntered
+        btnEliminarCuenta.setBackground(new Color(0, 204, 255));
+    }//GEN-LAST:event_btnEliminarCuentaMouseEntered
+
+    private void btnEliminarCuentaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCuentaMouseExited
+        btnEliminarCuenta.setBackground(new Color(102, 204, 255));
+    }//GEN-LAST:event_btnEliminarCuentaMouseExited
     public void colocarDatos(){
        DefaultTableModel modelo = (DefaultTableModel) tabla10mov.getModel();
-
-    Object[][] movimientos = Cuenta.mostrarUltimosMovimientos();
+        modelo.setRowCount(0);
+        Object[][] movimientos = Cuenta.mostrarUltimosMovimientos();
     
         for(Object[] mov:movimientos){
             String tipo = (String) mov[0];      
@@ -123,6 +166,8 @@ public class Principal extends javax.swing.JPanel {
             Object[] nuevaFila = {tipo, monto, descripcion, fecha};
             modelo.addRow(nuevaFila);
         }
+        tabla10mov.revalidate();
+        tabla10mov.repaint();
     }
 
     public void actualizarSaldo(){
@@ -133,8 +178,14 @@ public class Principal extends javax.swing.JPanel {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel btnEliminarCuenta;
+    private javax.swing.JPanel btnEliminarGasto;
+    private javax.swing.JPanel btnEliminarGasto1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel saldoActual;
     private javax.swing.JTable tabla10mov;
