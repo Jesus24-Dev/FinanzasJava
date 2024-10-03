@@ -10,16 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gasto {
-    private int id_gasto;
-    private int id_cuenta;
-    private String fecha;
-    private String descripcion;
-    private double monto;
+    public int id_cuenta;
+    public String dia;
+    public String mes;
+    public String anio;
+    public String descripcion;
+    public double monto;
 
-    public Gasto(int id_gasto, int id_cuenta, String fecha, String descripcion, double monto) {
-        this.id_gasto = id_gasto;
+    public Gasto(int id_cuenta, String dia, String mes, String anio, String descripcion, double monto) {
         this.id_cuenta = id_cuenta;
-        this.fecha = fecha;
+        this.dia = dia;
+        this.mes = mes;
+        this.anio = anio;
         this.descripcion = descripcion;
         this.monto = monto;
     }
@@ -91,4 +93,30 @@ public class Gasto {
         return movimientosArray;
     }
     
+    
+    public void eliminarGasto(){
+        String sql = "DELETE FROM gasto WHERE id_cuenta = ? " +
+                "AND dia = ? AND mes = ? AND anio = ? AND descripcion = ? AND monto = ?";
+        String sql2 = "UPDATE cuenta SET saldo_actual = saldo_actual - ?";
+         try (Connection conn = Conexion.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
+             conn.setAutoCommit(false);
+             
+             stmt.setInt(1, this.id_cuenta);
+             stmt.setString(2, this.dia);
+             stmt.setString(3, this.mes);
+             stmt.setString(4, this.anio);
+             stmt.setString(5, this.descripcion);
+             stmt.setDouble(6, this.monto);
+             
+             
+             stmt2.setDouble(1, this.monto);
+             stmt.executeUpdate();
+             stmt2.executeUpdate();
+             conn.commit();
+         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
