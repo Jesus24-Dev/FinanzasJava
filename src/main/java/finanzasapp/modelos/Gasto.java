@@ -97,7 +97,7 @@ public class Gasto {
     public void eliminarGasto(){
         String sql = "DELETE FROM gasto WHERE id_cuenta = ? " +
                 "AND dia = ? AND mes = ? AND anio = ? AND descripcion = ? AND monto = ?";
-        String sql2 = "UPDATE cuenta SET saldo_actual = saldo_actual - ?";
+        String sql2 = "UPDATE cuenta SET saldo_actual = saldo_actual + ?";
          try (Connection conn = Conexion.connect();
              PreparedStatement stmt = conn.prepareStatement(sql);
              PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
