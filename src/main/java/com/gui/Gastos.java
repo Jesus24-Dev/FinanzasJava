@@ -16,9 +16,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Gastos extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Gastos
-     */
+    Gasto gasto;
     public Gastos() {
         initComponents();
         llenaMeses(mesComboBox);
@@ -46,6 +44,7 @@ public class Gastos extends javax.swing.JPanel {
         btnEditarGasto = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        errorTxt = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -71,6 +70,11 @@ public class Gastos extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tablaGastos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaGastosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tablaGastos);
@@ -119,6 +123,9 @@ public class Gastos extends javax.swing.JPanel {
         btnEliminarGasto.setBackground(new java.awt.Color(102, 204, 255));
         btnEliminarGasto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarGasto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarGastoMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEliminarGastoMouseEntered(evt);
             }
@@ -158,6 +165,11 @@ public class Gastos extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Registro de gastos");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
+
+        errorTxt.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        errorTxt.setToolTipText("");
+        errorTxt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(errorTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 420, 260, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarGastoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarGastoMouseEntered
@@ -183,6 +195,31 @@ public class Gastos extends javax.swing.JPanel {
     private void mesComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mesComboBoxActionPerformed
         colocarDatos();
     }//GEN-LAST:event_mesComboBoxActionPerformed
+
+    private void tablaGastosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaGastosMouseClicked
+        int row = tablaGastos.getSelectedRow();
+        double monto = (double) tablaGastos.getValueAt(row, 0);
+        String descripcion = (String) tablaGastos.getValueAt(row, 1);
+        String fecha = (String) tablaGastos.getValueAt(row, 2);
+        String[] partesFecha = fecha.split("-");
+        String dia = partesFecha[0];
+        String mes = partesFecha[1];
+        String anio = partesFecha[2];
+        
+        gasto = new Gasto(1, dia, mes, anio, descripcion, monto);
+    }//GEN-LAST:event_tablaGastosMouseClicked
+
+    private void btnEliminarGastoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarGastoMouseClicked
+        if(gasto != null){
+            gasto.eliminarGasto();
+            errorTxt.setText("Gasto eliminado");
+            errorTxt.setForeground(Color.green);
+            colocarDatos();
+        } else {
+            errorTxt.setText("Escoja una celda para eliminar.");
+            errorTxt.setForeground(Color.red);
+        }
+    }//GEN-LAST:event_btnEliminarGastoMouseClicked
 
     public void colocarDatos(){
         
@@ -236,6 +273,7 @@ public class Gastos extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnEditarGasto;
     private javax.swing.JPanel btnEliminarGasto;
+    private javax.swing.JLabel errorTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
