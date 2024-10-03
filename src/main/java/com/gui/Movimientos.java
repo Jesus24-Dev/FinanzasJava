@@ -65,7 +65,6 @@ public class Movimientos extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         errorTxt = new javax.swing.JLabel();
@@ -128,12 +127,12 @@ public class Movimientos extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Mes");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 460, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 430, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Año");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 460, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, -1, -1));
 
         mesComboBox.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
         mesComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -141,14 +140,14 @@ public class Movimientos extends javax.swing.JPanel {
                 mesComboBoxActionPerformed(evt);
             }
         });
-        add(mesComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 490, -1, -1));
+        add(mesComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 460, -1, -1));
 
         yearComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yearComboBoxActionPerformed(evt);
             }
         });
-        add(yearComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, -1, -1));
+        add(yearComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 460, -1, -1));
 
         registrarMovimiento.setBackground(new java.awt.Color(102, 204, 255));
         registrarMovimiento.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -205,12 +204,6 @@ public class Movimientos extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Todos los movimientos");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
-
-        jLabel11.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel11.setFont(new java.awt.Font("Lucida Sans", 2, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setText("Buscar por...");
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, -1, -1));
 
         btnAgregar.setBackground(new java.awt.Color(102, 204, 255));
         btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -373,7 +366,6 @@ public class Movimientos extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> escogeMes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

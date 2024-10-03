@@ -92,7 +92,7 @@ public class Principal extends javax.swing.JPanel {
             tabla10mov.getColumnModel().getColumn(3).setPreferredWidth(30);
         }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 300, 690, 181));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 300, 690, 190));
 
         jLabel1.setFont(new java.awt.Font("Lucida Sans", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
