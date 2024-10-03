@@ -4,6 +4,7 @@
  */
 package finanzasapp;
 
+import finanzasapp.modelos.Gasto;
 import finanzasapp.modelos.Ingreso;
 import javax.swing.*;
 import java.awt.*;
@@ -114,10 +115,17 @@ public class Form extends JDialog {
         anio.setSelectedItem(anioMov);
         
         botonEnviar.addActionListener(e -> {
+            
+            double montoNuevo = Double.parseDouble(campoMonto.getText());
+            String nuevaDescripcion = campoDescripcion.getText();
+            String nuevoDia = (String) dia.getSelectedItem();
+            String nuevoMes = (String) mes.getSelectedItem();
+            String nuevoAnio = (String) anio.getSelectedItem();
+            
             if (tipo.equals("INGRESO")){
-                System.out.println("se registra ingreso");
+                Ingreso.editarIngreso(nuevoDia, nuevoMes, nuevoAnio, monto, montoNuevo, nuevaDescripcion);
             } else if (tipo.equals("GASTO")){
-                System.out.println("se registra gasto");
+                Gasto.editarGasto(nuevoDia, nuevoMes, nuevoAnio, monto, montoNuevo, nuevaDescripcion);
             }
             dispose(); 
         });
