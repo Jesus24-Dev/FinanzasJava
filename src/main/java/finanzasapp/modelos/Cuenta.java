@@ -91,6 +91,65 @@ public class Cuenta {
         return movimientosArray;
     }
 
+   public static Object[][] mostrarTodosMovimientos(String mm, String yyyy) {
+       List<Object> ultimosMovimientos = new ArrayList<>();
+        String sql = "SELECT dia, mes, anio, monto, descripcion, 'INGRESO' AS tipo, " +
+                 "CASE mes " +
+                 "WHEN 'Enero' THEN 1 " +
+                 "WHEN 'Febrero' THEN 2 " +
+                 "WHEN 'Marzo' THEN 3 " +
+                 "WHEN 'Abril' THEN 4 " +
+                 "WHEN 'Mayo' THEN 5 " +
+                 "WHEN 'Junio' THEN 6 " +
+                 "WHEN 'Julio' THEN 7 " +
+                 "WHEN 'Agosto' THEN 8 " +
+                 "WHEN 'Septiembre' THEN 9 " +
+                 "WHEN 'Octubre' THEN 10 " +
+                 "WHEN 'Noviembre' THEN 11 " +
+                 "WHEN 'Diciembre' THEN 12 " +
+                 "END AS mes_numero FROM ingreso WHERE mes = ? AND anio = ?" +
+                 "UNION " +
+                 "SELECT dia, mes, anio, monto, descripcion, 'GASTO' AS tipo, " +
+                 "CASE mes " +
+                 "WHEN 'Enero' THEN 1 " +
+                 "WHEN 'Febrero' THEN 2 " +
+                 "WHEN 'Marzo' THEN 3 " +
+                 "WHEN 'Abril' THEN 4 " +
+                 "WHEN 'Mayo' THEN 5 " +
+                 "WHEN 'Junio' THEN 6 " +
+                 "WHEN 'Julio' THEN 7 " +
+                 "WHEN 'Agosto' THEN 8 " +
+                 "WHEN 'Septiembre' THEN 9 " +
+                 "WHEN 'Octubre' THEN 10 " +
+                 "WHEN 'Noviembre' THEN 11 " +
+                 "WHEN 'Diciembre' THEN 12 " +
+                 "END AS mes_numero FROM gasto WHERE mes = ? AND anio = ?" +
+                 "ORDER BY anio DESC, mes_numero DESC, dia DESC ";
+
+        try (Connection conn = Conexion.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, mm);
+            stmt.setString(2, yyyy);
+            stmt.setString(3, mm);
+            stmt.setString(4, yyyy);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int dia = rs.getInt("dia");
+                String mes = rs.getString("mes");
+                int anio = rs.getInt("anio");
+                double monto = rs.getDouble("monto");
+                String descripcion = rs.getString("descripcion");
+                String tipo = rs.getString("tipo");
+                String fecha = dia + "-" + mes + "-" + anio; 
+                ultimosMovimientos.add(new Object[]{tipo, monto, descripcion, fecha});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Object[][] movimientosArray = new Object[ultimosMovimientos.size()][];
+        movimientosArray = ultimosMovimientos.toArray(movimientosArray); 
+        return movimientosArray;
+    }
    
     
 }
