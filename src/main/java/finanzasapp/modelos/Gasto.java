@@ -119,4 +119,33 @@ public class Gasto {
             e.printStackTrace();
         }
     }
+    
+    public static void editarGasto(String dia, String mes, String anio, double montoViejo, double monto,  String descripcion){
+        String sql = "UPDATE gasto SET dia = ?, mes = ?, anio = ?, monto = ?, descripcion = ? ";
+        String sql2 = "UPDATE cuenta SET saldo_actual = saldo_actual + ?";
+        String sql3 = "UPDATE cuenta SET saldo_actual = saldo_actual - ?";
+        
+         try (Connection conn = Conexion.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             PreparedStatement stmt2 = conn.prepareStatement(sql2);
+             PreparedStatement stmt3 = conn.prepareStatement(sql3)) {
+             conn.setAutoCommit(false);
+             
+             stmt.setString(1, dia);
+             stmt.setString(2, mes);
+             stmt.setString(3, anio);
+             stmt.setDouble(4, monto);   
+             stmt.setString(5, descripcion); 
+             stmt2.setDouble(1, montoViejo);
+             stmt3.setDouble(1, monto);
+             
+             stmt.executeUpdate();
+             stmt2.executeUpdate();
+             stmt3.executeUpdate();
+             conn.commit();
+         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
