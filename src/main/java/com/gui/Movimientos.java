@@ -4,6 +4,7 @@
  */
 package com.gui;
 
+import finanzasapp.modelos.Cuenta;
 import finanzasapp.modelos.Gasto;
 import finanzasapp.modelos.Ingreso;
 import java.awt.Color;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -29,6 +31,7 @@ public class Movimientos extends javax.swing.JPanel {
         llenaDias(escogeDia);
         llenaMeses(mesComboBox);
         llenaMeses(escogeMes);
+        
         
     }
 
@@ -77,7 +80,7 @@ public class Movimientos extends javax.swing.JPanel {
         tablaMovimientos.setForeground(new java.awt.Color(0, 0, 0));
         tablaMovimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"INGRESO", null, null, null}
+
             },
             new String [] {
                 "Tipo", "Monto", "Descripción", "Fecha"
@@ -106,16 +109,16 @@ public class Movimientos extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tablaMovimientos);
         if (tablaMovimientos.getColumnModel().getColumnCount() > 0) {
             tablaMovimientos.getColumnModel().getColumn(0).setResizable(false);
-            tablaMovimientos.getColumnModel().getColumn(0).setPreferredWidth(70);
+            tablaMovimientos.getColumnModel().getColumn(0).setPreferredWidth(60);
             tablaMovimientos.getColumnModel().getColumn(1).setResizable(false);
             tablaMovimientos.getColumnModel().getColumn(1).setPreferredWidth(60);
             tablaMovimientos.getColumnModel().getColumn(2).setResizable(false);
-            tablaMovimientos.getColumnModel().getColumn(2).setPreferredWidth(200);
+            tablaMovimientos.getColumnModel().getColumn(2).setPreferredWidth(180);
             tablaMovimientos.getColumnModel().getColumn(3).setResizable(false);
-            tablaMovimientos.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tablaMovimientos.getColumnModel().getColumn(3).setPreferredWidth(100);
         }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 340, 340));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 360, 340));
 
         jLabel1.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -133,8 +136,18 @@ public class Movimientos extends javax.swing.JPanel {
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 460, -1, -1));
 
         mesComboBox.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
+        mesComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mesComboBoxActionPerformed(evt);
+            }
+        });
         add(mesComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 490, -1, -1));
 
+        yearComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearComboBoxActionPerformed(evt);
+            }
+        });
         add(yearComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, -1, -1));
 
         registrarMovimiento.setBackground(new java.awt.Color(102, 204, 255));
@@ -236,6 +249,8 @@ public class Movimientos extends javax.swing.JPanel {
         btnAgregar.setBackground(new Color(102, 204, 255));
     }//GEN-LAST:event_btnAgregarMouseExited
 
+    
+    
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
         errorTxt.setText("");
         try{
@@ -253,12 +268,18 @@ public class Movimientos extends javax.swing.JPanel {
         double montoMvm = Double.parseDouble(montoText); 
         if(tipoDeMvm.equals("INGRESO")){
             Ingreso.guardarIngreso(dia, mes, anio, descMvm, montoMvm);
+            montoMovimiento.setText("");
+            descMovimiento.setText("");
             errorTxt.setForeground(Color.GREEN);
             errorTxt.setText("Nuevo ingreso registrado");
+            colocarDatos();
         } else {
+            montoMovimiento.setText("");
+            descMovimiento.setText("");
             Gasto.guardarGasto(dia, mes, anio, descMvm, montoMvm);
             errorTxt.setForeground(Color.GREEN);
             errorTxt.setText("Nuevo gasto registrado");
+            colocarDatos();
         }
         
         } catch(NumberFormatException e){
@@ -271,24 +292,66 @@ public class Movimientos extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnAgregarMouseClicked
 
+    private void yearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBoxActionPerformed
+
+        colocarDatos();
+    }//GEN-LAST:event_yearComboBoxActionPerformed
+
+    private void mesComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mesComboBoxActionPerformed
+       colocarDatos();
+    }//GEN-LAST:event_mesComboBoxActionPerformed
+
     public class ErrorPersonalizado extends Exception {
         public ErrorPersonalizado(String mensaje) {
             super(mensaje);
             }
     }
     
+    public String obtenerMes(){
+        String mes = (String) mesComboBox.getSelectedItem();
+        
+        return mes;
+    }
+    public String obtenerAnio(){
+        String anio = (String) yearComboBox.getSelectedItem();
+        
+        return anio;
+    }
+    
+    public void colocarDatos(){
+        
+       DefaultTableModel modelo = (DefaultTableModel) tablaMovimientos.getModel();
+        modelo.setRowCount(0);
+        Object[][] movimientos = Cuenta.mostrarTodosMovimientos(obtenerMes(), obtenerAnio());
+    
+        for(Object[] mov:movimientos){
+            String tipo = (String) mov[0];      
+            Double monto = (Double) mov[1];     
+            String descripcion = (String) mov[2]; 
+            String fecha = (String) mov[3];      
+            Object[] nuevaFila = {tipo, monto, descripcion, fecha};
+            modelo.addRow(nuevaFila);
+        }
+        tablaMovimientos.revalidate();
+        tablaMovimientos.repaint();
+    }
+    
     private void llenaDias(JComboBox box){
+        Date fechaActual = new Date();
         for (int i = 1; i <= 31; i++){
             box.addItem(Integer.toString(i));
         }
+        box.setSelectedIndex(fechaActual.getDay() - 2);
     }
     
     private void llenaMeses(JComboBox box){
+        Date fechaActual = new Date();
         String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
             "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
         for (String mese : meses) {
             box.addItem(mese);
         }
+        box.setSelectedIndex(fechaActual.getMonth());
     }
     
     private void llenarAnios(JComboBox box){
