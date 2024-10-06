@@ -211,6 +211,7 @@ public class Ingresos extends javax.swing.JPanel {
 
     private void btnEliminarIngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarIngresoMouseClicked
         if(ingreso != null){
+            ingreso.eliminarIngreso();
             JOptionPane.showMessageDialog(null, "Ingreso eliminado");
             colocarDatos();
         } else {
