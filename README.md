@@ -44,7 +44,3 @@ Si quieres hacer una:
 Si tienes alguna recomendacion, con gusto la leeré!
 
 [Mis redes sociales](https://github.com/Jesus24-Dev)
-
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
