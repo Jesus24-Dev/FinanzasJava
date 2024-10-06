@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -66,7 +67,6 @@ public class Movimientos extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        errorTxt = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(300, 300));
@@ -226,11 +226,6 @@ public class Movimientos extends javax.swing.JPanel {
         btnAgregar.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 60, 50));
 
         add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 460, 140, 50));
-
-        errorTxt.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
-        errorTxt.setForeground(new java.awt.Color(255, 0, 0));
-        errorTxt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(errorTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, 220, 20));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseEntered
@@ -244,8 +239,7 @@ public class Movimientos extends javax.swing.JPanel {
     
     
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        errorTxt.setText("");
-        try{
+       try{
         String tipoDeMvm = (String) tipoMovimiento.getSelectedItem();
         String montoText = montoMovimiento.getText();
         String descMvm = descMovimiento.getText();
@@ -262,24 +256,20 @@ public class Movimientos extends javax.swing.JPanel {
             Ingreso.guardarIngreso(dia, mes, anio, descMvm, montoMvm);
             montoMovimiento.setText("");
             descMovimiento.setText("");
-            errorTxt.setForeground(Color.GREEN);
-            errorTxt.setText("Nuevo ingreso registrado");
+            JOptionPane.showMessageDialog(null, "Nuevo ingreso registrado.");
             colocarDatos();
         } else {
             montoMovimiento.setText("");
             descMovimiento.setText("");
             Gasto.guardarGasto(dia, mes, anio, descMvm, montoMvm);
-            errorTxt.setForeground(Color.GREEN);
-            errorTxt.setText("Nuevo gasto registrado");
+            JOptionPane.showMessageDialog(null, "Nuevo gasto registrado.");
             colocarDatos();
         }
         
         } catch(NumberFormatException e){
-            errorTxt.setForeground(Color.RED);
-            errorTxt.setText("El monto debe ser un número");
+            JOptionPane.showMessageDialog(null, "El monto debe ser un numero.");
         } catch (ErrorPersonalizado e) {
-            errorTxt.setForeground(Color.RED);
-            errorTxt.setText("Los campos son requeridos");
+            JOptionPane.showMessageDialog(null, "Los campos son requeridos.");
         }
         
     }//GEN-LAST:event_btnAgregarMouseClicked
@@ -333,7 +323,7 @@ public class Movimientos extends javax.swing.JPanel {
         for (int i = 1; i <= 31; i++){
             box.addItem(Integer.toString(i));
         }
-        box.setSelectedIndex(fechaActual.getDay() - 2);
+        box.setSelectedIndex(fechaActual.getDate() - 1);
     }
     
     private void llenaMeses(JComboBox box){
@@ -359,7 +349,6 @@ public class Movimientos extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnAgregar;
     private javax.swing.JTextField descMovimiento;
-    private javax.swing.JLabel errorTxt;
     private javax.swing.JComboBox<String> escogeAnio;
     private javax.swing.JComboBox<String> escogeDia;
     private javax.swing.JComboBox<String> escogeMes;
