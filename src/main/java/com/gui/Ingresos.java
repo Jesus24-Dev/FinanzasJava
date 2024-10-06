@@ -9,6 +9,7 @@ import finanzasapp.modelos.Ingreso;
 import java.awt.Color;
 import java.util.Date;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,7 +47,6 @@ public class Ingresos extends javax.swing.JPanel {
         btnEditarIngreso = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        errorTxt = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -170,11 +170,6 @@ public class Ingresos extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Registro de ingresos");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
-
-        errorTxt.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
-        errorTxt.setToolTipText("");
-        errorTxt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(errorTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 420, 260, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarIngresoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarIngresoMouseEntered
@@ -216,25 +211,20 @@ public class Ingresos extends javax.swing.JPanel {
 
     private void btnEliminarIngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarIngresoMouseClicked
         if(ingreso != null){
-            ingreso.eliminarIngreso();
-            errorTxt.setText("Ingreso eliminado");
-            errorTxt.setForeground(Color.green);
+            JOptionPane.showMessageDialog(null, "Ingreso eliminado");
             colocarDatos();
         } else {
-            errorTxt.setText("Escoja una celda para eliminar.");
-            errorTxt.setForeground(Color.red);
+            JOptionPane.showMessageDialog(null, "Escoja una celda para eliminar.");
         }
     }//GEN-LAST:event_btnEliminarIngresoMouseClicked
 
     private void btnEditarIngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarIngresoMouseClicked
            if(ingreso != null){
             Form.mostrarFormulario("Editar ingreso", "INGRESO", ingreso.monto, ingreso.descripcion, ingreso.dia, ingreso.mes, ingreso.anio);
-            errorTxt.setText("Ingreso editado");
-            errorTxt.setForeground(Color.green);
+            JOptionPane.showMessageDialog(null, "Ingreso editado");
             colocarDatos();
         } else {
-            errorTxt.setText("Escoja una celda para editar.");
-            errorTxt.setForeground(Color.red);
+            JOptionPane.showMessageDialog(null, "Escoja una celda para editar.");
         }
     }//GEN-LAST:event_btnEditarIngresoMouseClicked
 
@@ -290,7 +280,6 @@ public class Ingresos extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnEditarIngreso;
     private javax.swing.JPanel btnEliminarIngreso;
-    private javax.swing.JLabel errorTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;

@@ -9,6 +9,7 @@ import finanzasapp.modelos.Gasto;
 import java.awt.Color;
 import java.util.Date;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -45,7 +46,6 @@ public class Gastos extends javax.swing.JPanel {
         btnEditarGasto = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        errorTxt = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -169,11 +169,6 @@ public class Gastos extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Registro de gastos");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
-
-        errorTxt.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
-        errorTxt.setToolTipText("");
-        errorTxt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(errorTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 420, 260, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarGastoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarGastoMouseEntered
@@ -216,24 +211,21 @@ public class Gastos extends javax.swing.JPanel {
     private void btnEliminarGastoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarGastoMouseClicked
         if(gasto != null){
             gasto.eliminarGasto();
-            errorTxt.setText("Gasto eliminado");
-            errorTxt.setForeground(Color.green);
+            JOptionPane.showMessageDialog(null, "Gasto eliminado");
             colocarDatos();
+           
         } else {
-            errorTxt.setText("Escoja una celda para eliminar.");
-            errorTxt.setForeground(Color.red);
+            JOptionPane.showMessageDialog(null, "Escoja una celda para eliminar.");
         }
     }//GEN-LAST:event_btnEliminarGastoMouseClicked
 
     private void btnEditarGastoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarGastoMouseClicked
         if(gasto != null){
             Form.mostrarFormulario("Editar gasto", "GASTO", gasto.monto, gasto.descripcion, gasto.dia, gasto.mes, gasto.anio);
-            errorTxt.setText("Ingreso editado");
-            errorTxt.setForeground(Color.green);
+            JOptionPane.showMessageDialog(null, "Gasto editado");
             colocarDatos();
         } else {
-            errorTxt.setText("Escoja una celda para editar.");
-            errorTxt.setForeground(Color.red);
+            JOptionPane.showMessageDialog(null, "Escoja una celda para editar.");
         }
     }//GEN-LAST:event_btnEditarGastoMouseClicked
 
@@ -289,7 +281,6 @@ public class Gastos extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnEditarGasto;
     private javax.swing.JPanel btnEliminarGasto;
-    private javax.swing.JLabel errorTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
