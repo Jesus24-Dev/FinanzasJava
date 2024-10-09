@@ -67,7 +67,7 @@ public class Ingreso {
                "END AS mes_numero " +
                "FROM ingreso " +
                "WHERE mes = ? AND anio = ? " +
-               "ORDER BY anio DESC, mes_numero DESC, dia DESC;";
+               "ORDER BY anio DESC, mes_numero DESC, CAST(dia AS INTEGER) DESC";
 
         try (Connection conn = Conexion.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
