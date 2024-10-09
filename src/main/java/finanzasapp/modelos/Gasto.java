@@ -2,10 +2,7 @@
 package finanzasapp.modelos;
 
 import finanzasapp.modelos.conexion.Conexion;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +48,7 @@ public class Gasto {
     }
     
     public static Object[][] verGastos(String mm, String yyyy) {
-       List<Object> ingresos = new ArrayList<>();
+       List<Object> gastos = new ArrayList<>();
        String sql = "SELECT dia, mes, anio, monto, descripcion, " +
                "CASE mes " +
                "WHEN 'Enero' THEN 1 " +
@@ -83,13 +80,13 @@ public class Gasto {
                 double monto = rs.getDouble("monto");
                 String descripcion = rs.getString("descripcion");
                 String fecha = dia + "-" + mes + "-" + anio; 
-                ingresos.add(new Object[]{monto, descripcion, fecha});
+                gastos.add(new Object[]{monto, descripcion, fecha});
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Object[][] movimientosArray = new Object[ingresos.size()][];
-        movimientosArray = ingresos.toArray(movimientosArray); 
+        Object[][] movimientosArray = new Object[gastos.size()][];
+        movimientosArray = gastos.toArray(movimientosArray); 
         return movimientosArray;
     }
     
