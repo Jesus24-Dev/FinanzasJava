@@ -61,7 +61,7 @@ public class Form extends JDialog {
         campoDescripcion.setBackground(new Color(255, 255, 255));
         add(campoDescripcion);
 
-        JLabel comboLabel1 = new JLabel("Opción 1:");
+        JLabel comboLabel1 = new JLabel("Día:");
         comboLabel1.setBounds(30, 130, 100, 25);
         comboLabel1.setFont(fuente);
         comboLabel1.setForeground(colorTexto);
@@ -73,7 +73,7 @@ public class Form extends JDialog {
         dia.setForeground(Color.BLACK);
         llenaDias(dia);
         add(dia);    
-        JLabel comboLabel2 = new JLabel("Opción 2:");
+        JLabel comboLabel2 = new JLabel("Mes:");
         comboLabel2.setBounds(30, 170, 100, 25);
         comboLabel2.setFont(fuente);
         comboLabel2.setForeground(colorTexto);
@@ -86,7 +86,7 @@ public class Form extends JDialog {
         llenaMeses(mes);
         add(mes);
 
-        JLabel comboLabel3 = new JLabel("Opción 3:");
+        JLabel comboLabel3 = new JLabel("Año:");
         comboLabel3.setBounds(30, 210, 100, 25);
         comboLabel3.setFont(fuente);
         comboLabel3.setForeground(colorTexto);

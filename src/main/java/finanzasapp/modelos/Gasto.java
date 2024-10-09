@@ -2,10 +2,7 @@
 package finanzasapp.modelos;
 
 import finanzasapp.modelos.conexion.Conexion;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +48,7 @@ public class Gasto {
     }
     
     public static Object[][] verGastos(String mm, String yyyy) {
-       List<Object> ingresos = new ArrayList<>();
+       List<Object> gastos = new ArrayList<>();
        String sql = "SELECT dia, mes, anio, monto, descripcion, " +
                "CASE mes " +
                "WHEN 'Enero' THEN 1 " +
@@ -69,7 +66,7 @@ public class Gasto {
                "END AS mes_numero " +
                "FROM gasto " +
                "WHERE mes = ? AND anio = ? " +
-               "ORDER BY anio DESC, mes_numero DESC, dia DESC;";
+               "ORDER BY anio DESC, mes_numero DESC, CAST(dia AS INTEGER) DESC";
 
         try (Connection conn = Conexion.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -83,13 +80,13 @@ public class Gasto {
                 double monto = rs.getDouble("monto");
                 String descripcion = rs.getString("descripcion");
                 String fecha = dia + "-" + mes + "-" + anio; 
-                ingresos.add(new Object[]{monto, descripcion, fecha});
+                gastos.add(new Object[]{monto, descripcion, fecha});
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Object[][] movimientosArray = new Object[ingresos.size()][];
-        movimientosArray = ingresos.toArray(movimientosArray); 
+        Object[][] movimientosArray = new Object[gastos.size()][];
+        movimientosArray = gastos.toArray(movimientosArray); 
         return movimientosArray;
     }
     
@@ -121,7 +118,7 @@ public class Gasto {
     }
     
     public static void editarGasto(String dia, String mes, String anio, double monto, String descripcion, String diaViejo, String mesViejo, String anioViejo, double montoViejo, String descripcionVieja){
-        String sql = "UPDATE ingreso SET dia = ?, mes = ?, anio = ?, monto = ?, descripcion = ? " +
+        String sql = "UPDATE gasto SET dia = ?, mes = ?, anio = ?, monto = ?, descripcion = ? " +
                 "WHERE dia = ? AND mes = ? AND anio = ? AND monto = ? AND descripcion = ?";
         String sql2 = "UPDATE cuenta SET saldo_actual = saldo_actual + ?";
         String sql3 = "UPDATE cuenta SET saldo_actual = saldo_actual - ?";

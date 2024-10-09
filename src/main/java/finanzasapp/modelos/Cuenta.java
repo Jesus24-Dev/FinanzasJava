@@ -35,7 +35,7 @@ public class Cuenta {
 
    public static Object[][] mostrarUltimosMovimientos() {
        List<Object> ultimosMovimientos = new ArrayList<>();
-        String sql = "SELECT dia, mes, anio, monto, descripcion, 'INGRESO' AS tipo, " +
+        String sql = "SELECT CAST(dia AS INTEGER) AS dia_numero, mes, anio, monto, descripcion, 'INGRESO' AS tipo, " +
                  "CASE mes " +
                  "WHEN 'Enero' THEN 1 " +
                  "WHEN 'Febrero' THEN 2 " +
@@ -50,8 +50,8 @@ public class Cuenta {
                  "WHEN 'Noviembre' THEN 11 " +
                  "WHEN 'Diciembre' THEN 12 " +
                  "END AS mes_numero FROM ingreso " +
-                 "UNION " +
-                 "SELECT dia, mes, anio, monto, descripcion, 'GASTO' AS tipo, " +
+                 "UNION ALL " +
+                 "SELECT CAST(dia AS INTEGER) AS dia_numero, mes, anio, monto, descripcion, 'GASTO' AS tipo, " +
                  "CASE mes " +
                  "WHEN 'Enero' THEN 1 " +
                  "WHEN 'Febrero' THEN 2 " +
@@ -66,7 +66,7 @@ public class Cuenta {
                  "WHEN 'Noviembre' THEN 11 " +
                  "WHEN 'Diciembre' THEN 12 " +
                  "END AS mes_numero FROM gasto " +
-                 "ORDER BY anio DESC, mes_numero DESC, dia DESC " +
+                 "ORDER BY anio DESC, mes_numero DESC, dia_numero DESC " +
                  "LIMIT 10";
 
         try (Connection conn = Conexion.connect();
@@ -74,7 +74,7 @@ public class Cuenta {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                int dia = rs.getInt("dia");
+                int dia = rs.getInt("dia_numero");
                 String mes = rs.getString("mes");
                 int anio = rs.getInt("anio");
                 double monto = rs.getDouble("monto");
@@ -93,7 +93,7 @@ public class Cuenta {
 
    public static Object[][] mostrarTodosMovimientos(String mm, String yyyy) {
        List<Object> ultimosMovimientos = new ArrayList<>();
-        String sql = "SELECT dia, mes, anio, monto, descripcion, 'INGRESO' AS tipo, " +
+        String sql = "SELECT CAST(dia AS INTEGER) AS dia_numero, mes, anio, monto, descripcion, 'INGRESO' AS tipo, " +
                  "CASE mes " +
                  "WHEN 'Enero' THEN 1 " +
                  "WHEN 'Febrero' THEN 2 " +
@@ -107,9 +107,9 @@ public class Cuenta {
                  "WHEN 'Octubre' THEN 10 " +
                  "WHEN 'Noviembre' THEN 11 " +
                  "WHEN 'Diciembre' THEN 12 " +
-                 "END AS mes_numero FROM ingreso WHERE mes = ? AND anio = ?" +
+                 "END AS mes_numero FROM ingreso WHERE mes = ? AND anio = ? " +
                  "UNION " +
-                 "SELECT dia, mes, anio, monto, descripcion, 'GASTO' AS tipo, " +
+                 "SELECT CAST(dia AS INTEGER) AS dia_numero, mes, anio, monto, descripcion, 'GASTO' AS tipo, " +
                  "CASE mes " +
                  "WHEN 'Enero' THEN 1 " +
                  "WHEN 'Febrero' THEN 2 " +
@@ -124,7 +124,7 @@ public class Cuenta {
                  "WHEN 'Noviembre' THEN 11 " +
                  "WHEN 'Diciembre' THEN 12 " +
                  "END AS mes_numero FROM gasto WHERE mes = ? AND anio = ?" +
-                 "ORDER BY anio DESC, mes_numero DESC, dia DESC ";
+                 "ORDER BY anio DESC, mes_numero DESC, dia_numero DESC ";
 
         try (Connection conn = Conexion.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -134,7 +134,7 @@ public class Cuenta {
             stmt.setString(4, yyyy);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                int dia = rs.getInt("dia");
+                int dia = rs.getInt("dia_numero");
                 String mes = rs.getString("mes");
                 int anio = rs.getInt("anio");
                 double monto = rs.getDouble("monto");
